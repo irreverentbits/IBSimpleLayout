@@ -15,6 +15,10 @@
 
 import Foundation
 
+/**
+A constraint is owned by either a parent of the view that the constraint affects,
+or it is owned by the view itself (e.g. a width constant).
+*/
 fileprivate enum OwningViewType {
 	case parentOwned
 	case selfOwned
@@ -30,8 +34,13 @@ public struct ConstraintDescription {
 	var constant: CGFloat = 0.0
 	var priority: UILayoutPriority = UILayoutPriorityRequired
 	var identifier: String?
-	var forceNilSecondView: Bool = false
 	fileprivate var owningView: OwningViewType = .parentOwned
+	
+	/** 
+	Some constraints are never in relation to a second view (e.g. a width constant).
+	When true, `forceNilSecondView` allows a second view specified for a set of constraints to be ignored for a specific constraint.
+	*/
+	var forceNilSecondView: Bool = false
 	
 	init() {}
 	
@@ -61,6 +70,11 @@ public struct ConstraintDescription {
 	}
 }
 
+/**
+A representation of an Auto Layout constraint.
+
+A pin can be applied as needed to a view using extension functions on `UIView`.
+*/
 public enum Pin {
 	case leading(CGFloat)
 	case trailing(CGFloat)
@@ -74,6 +88,18 @@ public enum Pin {
 	case centerY(CGFloat)
 	case below(CGFloat)
 	case above(CGFloat)
+	case lastBaseline(CGFloat)
+	case firstBaseline(CGFloat)
+	// left
+	// right
+	// leftMargin
+	// rigthMargin
+	// topMargin
+	// bottomMargin
+	// leadingMargin
+	// trailingMargin
+	// centerXWithinMargins
+	// centerYWithinMargins
 	case custom(ConstraintDescription)
 	
 	public func priority(_ value: Float) -> Pin {
@@ -122,28 +148,46 @@ public enum Pin {
 		switch self {
 		case let .leading(constant):
 			return ConstraintDescription(firstAttribute: .leading, secondAttribute: .leading, constant: constant)
+			
 		case let .trailing(constant):
 			return ConstraintDescription(firstAttribute: .trailing, secondAttribute: .trailing, constant: constant)
+		
 		case let .top(constant):
 			return ConstraintDescription(firstAttribute: .top, secondAttribute: .top, constant: constant)
+		
 		case let .bottom(constant):
 			return ConstraintDescription(firstAttribute: .bottom, secondAttribute: .bottom, constant: constant)
+		
 		case let .height(constant):
 			return ConstraintDescription(firstAttribute: .height, secondAttribute: .height, constant: constant)
+		
 		case let .heightConstant(constant):
 			return ConstraintDescription(firstAttribute: .height, secondAttribute: .notAnAttribute, constant: constant, forceNilSecondView: true, owningView: .selfOwned)
+		
 		case let .width(constant):
 			return ConstraintDescription(firstAttribute: .width, secondAttribute: .width, constant: constant)
+		
 		case let .widthConstant(constant):
 			return ConstraintDescription(firstAttribute: .width, secondAttribute: .notAnAttribute, constant: constant, forceNilSecondView: true, owningView: .selfOwned)
+		
 		case let .centerX(constant):
 			return ConstraintDescription(firstAttribute: .centerX, secondAttribute: .centerX, constant: constant)
+		
 		case let .centerY(constant):
 			return ConstraintDescription(firstAttribute: .centerY, secondAttribute: .centerY, constant: constant)
+		
 		case let .below(constant):
 			return ConstraintDescription(firstAttribute: .top, secondAttribute: .bottom, constant: constant)
+		
 		case let .above(constant):
 			return ConstraintDescription(firstAttribute: .bottom, secondAttribute: .top, constant: constant)
+		
+		case let .firstBaseline(constant):
+			return ConstraintDescription(firstAttribute: .firstBaseline, secondAttribute: .firstBaseline, constant: constant)
+		
+		case let .lastBaseline(constant):
+			return ConstraintDescription(firstAttribute: .lastBaseline, secondAttribute: .lastBaseline, constant: constant)
+		
 		case let .custom(description):
 			return description
 		}
@@ -151,6 +195,12 @@ public enum Pin {
 }
 
 public extension UIView {
+	/**
+	Updates existing constraints that correspond to the pins provided to the function.
+	If a matching pin doesn't exist, there is no change or addition to existing pins.
+	- parameter pins: The array of pins that should be updated.
+	- parameter otherView: The `UIView` that the constraints are relative to.
+	*/
 	public func updatePins(_ pins: [Pin], relativeTo otherView: UIView? = nil) {
 		guard let secondView = otherView ?? superview else {
 			debugPrint("FAILURE: `updatePins` was called on a UIView without a valid otherView to pin to or without yet having a superview to pin to")
@@ -184,6 +234,11 @@ public extension UIView {
 		}
 	}
 	
+	/**
+	Adds constraints specified by the pins provided to the function.
+	- parameter pins: The array of pins that should be added.
+	- parameter otherView: The `UIView` that the pins should reference (for those pins that require a second view to be specified).
+	*/
 	@discardableResult
 	public func pushPins(_ pins: [Pin], relativeTo otherView: UIView? = nil) -> [NSLayoutConstraint] {
 		guard let secondView = otherView ?? superview else {
@@ -225,6 +280,12 @@ public extension UIView {
 		return constraints
 	}
 	
+	/**
+	Adds a single constraint to a view and returns that constraint so that it can be referenced easily later.
+	- parameter pin: The single pin that should be added.
+	- parameter otherView: The `UIView` that the pin should reference (for those pins that require a second view to be specified).
+	- returns: The created constraint or nil if the constraint could not be created.
+	*/
 	@discardableResult
 	public func pushPin(_ pin: Pin, relativeTo otherView: UIView? = nil) -> NSLayoutConstraint? {
 		return pushPins([pin], relativeTo: otherView).first
