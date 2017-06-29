@@ -90,16 +90,16 @@ public enum Pin {
 	case above(CGFloat)
 	case lastBaseline(CGFloat)
 	case firstBaseline(CGFloat)
-	// left
-	// right
-	// leftMargin
-	// rigthMargin
-	// topMargin
-	// bottomMargin
+	case leftMargin(CGFloat)
+	case rightMargin(CGFloat)
+	case topMargin(CGFloat)
+	case bottomMargin(CGFloat)
 	// leadingMargin
 	// trailingMargin
-	// centerXWithinMargins
-	// centerYWithinMargins
+	case centerXWithinMargins(CGFloat)
+	case centerYWithinMargins(CGFloat)
+	// left
+	// right
 	case custom(ConstraintDescription)
 	
 	public func priority(_ value: Float) -> Pin {
@@ -143,7 +143,7 @@ public enum Pin {
         
         return .custom(description)
     }
-    
+	    
 	internal func constraintDescription() -> ConstraintDescription {
 		switch self {
 		case let .leading(constant):
@@ -188,6 +188,24 @@ public enum Pin {
 		case let .lastBaseline(constant):
 			return ConstraintDescription(firstAttribute: .lastBaseline, secondAttribute: .lastBaseline, constant: constant)
 		
+		case let .leftMargin(constant):
+			return ConstraintDescription(firstAttribute: .leading, secondAttribute: .leadingMargin, constant: constant)
+			
+		case let .rightMargin(constant):
+			return ConstraintDescription(firstAttribute: .trailing, secondAttribute: .trailingMargin, constant: constant)
+			
+		case let .topMargin(constant):
+			return ConstraintDescription(firstAttribute: .top, secondAttribute: .topMargin, constant: constant)
+			
+		case let .bottomMargin(constant):
+			return ConstraintDescription(firstAttribute: .bottom, secondAttribute: .bottomMargin, constant: constant)
+			
+		case let .centerXWithinMargins(constant):
+			return ConstraintDescription(firstAttribute: .centerX, secondAttribute: .centerXWithinMargins, constant: constant)
+			
+		case let .centerYWithinMargins(constant):
+			return ConstraintDescription(firstAttribute: .centerY, secondAttribute: .centerYWithinMargins, constant: constant)
+			
 		case let .custom(description):
 			return description
 		}
