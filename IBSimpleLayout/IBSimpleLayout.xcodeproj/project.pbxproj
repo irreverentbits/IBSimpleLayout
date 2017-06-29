@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		50BB40251EE72B750017441E /* IBSimpleLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BB40231EE72B750017441E /* IBSimpleLayout.swift */; };
-		50BB40261EE72B750017441E /* UIView+Ancestry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BB40241EE72B750017441E /* UIView+Ancestry.swift */; };
 		50F822FC1EE727F700455752 /* IBSimpleLayout.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50F822F21EE727F700455752 /* IBSimpleLayout.framework */; };
 		50F823011EE727F700455752 /* IBSimpleLayoutTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F823001EE727F700455752 /* IBSimpleLayoutTests.swift */; };
 		50F823031EE727F700455752 /* IBSimpleLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = 50F822F51EE727F700455752 /* IBSimpleLayout.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -26,7 +25,6 @@
 
 /* Begin PBXFileReference section */
 		50BB40231EE72B750017441E /* IBSimpleLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IBSimpleLayout.swift; sourceTree = "<group>"; };
-		50BB40241EE72B750017441E /* UIView+Ancestry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Ancestry.swift"; sourceTree = "<group>"; };
 		50F822F21EE727F700455752 /* IBSimpleLayout.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = IBSimpleLayout.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		50F822F51EE727F700455752 /* IBSimpleLayout.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IBSimpleLayout.h; sourceTree = "<group>"; };
 		50F822F61EE727F700455752 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -78,7 +76,6 @@
 				50F822F51EE727F700455752 /* IBSimpleLayout.h */,
 				50BB40231EE72B750017441E /* IBSimpleLayout.swift */,
 				50F822F61EE727F700455752 /* Info.plist */,
-				50BB40241EE72B750017441E /* UIView+Ancestry.swift */,
 			);
 			path = IBSimpleLayout;
 			sourceTree = "<group>";
@@ -206,7 +203,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				50BB40251EE72B750017441E /* IBSimpleLayout.swift in Sources */,
-				50BB40261EE72B750017441E /* UIView+Ancestry.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

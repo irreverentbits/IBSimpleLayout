@@ -144,7 +144,7 @@ public enum Pin {
         return .custom(description)
     }
     
-	func constraintDescription() -> ConstraintDescription {
+	internal func constraintDescription() -> ConstraintDescription {
 		switch self {
 		case let .leading(constant):
 			return ConstraintDescription(firstAttribute: .leading, secondAttribute: .leading, constant: constant)
@@ -251,13 +251,15 @@ public extension UIView {
 			return []
 		}
 		
-		var constraints = [NSLayoutConstraint]()
+		var pinConstraints = [NSLayoutConstraint]()
 		
 		translatesAutoresizingMaskIntoConstraints = false
 		
 		pins.forEach { (pin) in
 			var description = pin.constraintDescription()
+			
 			description.firstView = self
+			
 			description.secondView = (description.forceNilSecondView ? nil : secondView)
 			
 			let constraint = NSLayoutConstraint(item: description.firstView as Any,
@@ -269,15 +271,16 @@ public extension UIView {
 			                                    constant: description.constant)
 			
 			constraint.priority = description.priority
+			
 			constraint.identifier = description.identifier
 			
 			let owningView = (description.owningView == .parentOwned ? parentView : self)
 			owningView.addConstraint(constraint)
 			
-			constraints.append(constraint)
+			pinConstraints.append(constraint)
 		}
 		
-		return constraints
+		return pinConstraints
 	}
 	
 	/**
@@ -289,5 +292,52 @@ public extension UIView {
 	@discardableResult
 	public func pushPin(_ pin: Pin, relativeTo otherView: UIView? = nil) -> NSLayoutConstraint? {
 		return pushPins([pin], relativeTo: otherView).first
+	}
+}
+
+private extension UIView {
+	/**
+	Find the common ancestor of two views in a view hierarchy. A view can be considered its own ancestor,
+	so one of the provided views will be returned if it is an ancestor of the other view.
+	- parameter firstView: The first of two possibly hierarchically related UIViews.
+	- parameter secondView: The second of two possibly hierarchically related UIViews.
+	- returns: The common ancestor of the `firstView` and the `secondView` or nil if there is no common ancestor.
+	*/
+	func inclusiveCommonAncestor(firstView: UIView, secondView: UIView) -> UIView? {
+		var foundAncestor: UIView? = nil
+		
+		// Check if one of the provided views is itself the common ancestor before moving up the hierarchy looking for a different ancestor
+		if firstView.isDescendant(of: secondView) {
+			foundAncestor = secondView
+		} else if secondView.isDescendant(of: firstView) {
+			foundAncestor = firstView
+		} else {
+			foundAncestor = exclusiveCommonAncestor(firstView: firstView, secondView: secondView)
+		}
+		
+		return foundAncestor
+	}
+	
+	/**
+	Find the common ancestor of the two views in a view hierarchy. A view cannot be considered its own ancestor.
+	- parameter firstView: The first of two possibly hierarchically related UIViews.
+	- parameter secondView: The second of two possibly hierarchically related UIViews.
+	- returns: The common ancestor of both views or nil if there is no common ancestor.
+	*/
+	func exclusiveCommonAncestor(firstView: UIView, secondView: UIView) -> UIView? {
+		var foundAncestor: UIView? = nil
+		
+		var testAncestor: UIView? = firstView.superview
+		
+		while testAncestor != nil {
+			if secondView.isDescendant(of: testAncestor!) {
+				foundAncestor = testAncestor
+				break
+			}
+			
+			testAncestor = testAncestor!.superview
+		}
+		
+		return foundAncestor
 	}
 }
