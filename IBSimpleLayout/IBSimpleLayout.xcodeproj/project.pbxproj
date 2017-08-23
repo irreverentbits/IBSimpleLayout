@@ -7,7 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5004E2891F36F8F000882CC3 /* FirstBaselineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5004E2881F36F8F000882CC3 /* FirstBaselineTests.swift */; };
+		5013F6901F2C715F002EC1BC /* DimensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5013F68F1F2C715F002EC1BC /* DimensionTests.swift */; };
+		5052F2BF1F2B19DD000992B4 /* EdgeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5052F2BE1F2B19DD000992B4 /* EdgeTests.swift */; };
+		509E44941F2DAA1700235F55 /* MarginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 509E44931F2DAA1700235F55 /* MarginTests.swift */; };
+		509E44961F2DAA2900235F55 /* CenteringTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 509E44951F2DAA2900235F55 /* CenteringTests.swift */; };
+		50AB570F1F4437FF00EF60D6 /* LastBaselineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50AB570E1F4437FF00EF60D6 /* LastBaselineTests.swift */; };
 		50BB40251EE72B750017441E /* IBSimpleLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BB40231EE72B750017441E /* IBSimpleLayout.swift */; };
+		50C3B71C1F31916900F07CD7 /* AboveBelowTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C3B71B1F31916900F07CD7 /* AboveBelowTests.swift */; };
 		50F822FC1EE727F700455752 /* IBSimpleLayout.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50F822F21EE727F700455752 /* IBSimpleLayout.framework */; };
 		50F823011EE727F700455752 /* IBSimpleLayoutTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F823001EE727F700455752 /* IBSimpleLayoutTests.swift */; };
 		50F823031EE727F700455752 /* IBSimpleLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = 50F822F51EE727F700455752 /* IBSimpleLayout.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -24,7 +31,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5004E2881F36F8F000882CC3 /* FirstBaselineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstBaselineTests.swift; sourceTree = "<group>"; };
+		5013F68F1F2C715F002EC1BC /* DimensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DimensionTests.swift; sourceTree = "<group>"; };
+		5052F2BE1F2B19DD000992B4 /* EdgeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EdgeTests.swift; sourceTree = "<group>"; };
+		509E44931F2DAA1700235F55 /* MarginTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarginTests.swift; sourceTree = "<group>"; };
+		509E44951F2DAA2900235F55 /* CenteringTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CenteringTests.swift; sourceTree = "<group>"; };
+		50AB570E1F4437FF00EF60D6 /* LastBaselineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastBaselineTests.swift; sourceTree = "<group>"; };
 		50BB40231EE72B750017441E /* IBSimpleLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IBSimpleLayout.swift; sourceTree = "<group>"; };
+		50C3B71B1F31916900F07CD7 /* AboveBelowTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboveBelowTests.swift; sourceTree = "<group>"; };
 		50F822F21EE727F700455752 /* IBSimpleLayout.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = IBSimpleLayout.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		50F822F51EE727F700455752 /* IBSimpleLayout.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IBSimpleLayout.h; sourceTree = "<group>"; };
 		50F822F61EE727F700455752 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -85,6 +99,13 @@
 			children = (
 				50F823001EE727F700455752 /* IBSimpleLayoutTests.swift */,
 				50F823021EE727F700455752 /* Info.plist */,
+				5052F2BE1F2B19DD000992B4 /* EdgeTests.swift */,
+				5013F68F1F2C715F002EC1BC /* DimensionTests.swift */,
+				509E44931F2DAA1700235F55 /* MarginTests.swift */,
+				509E44951F2DAA2900235F55 /* CenteringTests.swift */,
+				50C3B71B1F31916900F07CD7 /* AboveBelowTests.swift */,
+				5004E2881F36F8F000882CC3 /* FirstBaselineTests.swift */,
+				50AB570E1F4437FF00EF60D6 /* LastBaselineTests.swift */,
 			);
 			path = IBSimpleLayoutTests;
 			sourceTree = "<group>";
@@ -210,7 +231,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				509E44961F2DAA2900235F55 /* CenteringTests.swift in Sources */,
+				5013F6901F2C715F002EC1BC /* DimensionTests.swift in Sources */,
+				509E44941F2DAA1700235F55 /* MarginTests.swift in Sources */,
+				50C3B71C1F31916900F07CD7 /* AboveBelowTests.swift in Sources */,
+				50AB570F1F4437FF00EF60D6 /* LastBaselineTests.swift in Sources */,
+				5052F2BF1F2B19DD000992B4 /* EdgeTests.swift in Sources */,
 				50F823011EE727F700455752 /* IBSimpleLayoutTests.swift in Sources */,
+				5004E2891F36F8F000882CC3 /* FirstBaselineTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -375,6 +403,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				DEVELOPMENT_TEAM = 9U82ALRAZB;
+				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = IBSimpleLayoutTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.irreverentbits.IBSimpleLayoutTests;
@@ -388,6 +417,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				DEVELOPMENT_TEAM = 9U82ALRAZB;
+				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = IBSimpleLayoutTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.irreverentbits.IBSimpleLayoutTests;

@@ -1,4 +1,4 @@
-//  Copyright © 2017 Irreverent Bits. All rights reserved.
+// Copyright © 2017 Irreverent Bits. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -16,14 +16,18 @@
 import Foundation
 
 /**
-A constraint is owned by either a parent of the view that the constraint affects,
-or it is owned by the view itself (e.g. a width constant).
+The type of the view that a constraint should be owned by.
 */
 fileprivate enum OwningViewType {
+	/// The associated constraint should be owned by a parent of the view that the constraint affects.
 	case parentOwned
+	/// The associated constraint should be owned directly by the view that the constraint affects (e.g. a width constraint)
 	case selfOwned
 }
 
+/**
+An intermediate description of an autolayout constraint that can be fully edited before it is used to construct an `NSLayoutConstraint`.
+*/
 public struct ConstraintDescription {
 	var firstView: UIView? = nil
 	var firstAttribute: NSLayoutAttribute = .notAnAttribute
@@ -143,7 +147,10 @@ public enum Pin {
         
         return .custom(description)
     }
-	    
+	
+	/**
+	Returns a `ConstraintDescription` corresponding to the current enum value and its associated value.
+	*/
 	internal func constraintDescription() -> ConstraintDescription {
 		switch self {
 		case let .leading(constant):
@@ -162,13 +169,21 @@ public enum Pin {
 			return ConstraintDescription(firstAttribute: .height, secondAttribute: .height, constant: constant)
 		
 		case let .heightConstant(constant):
-			return ConstraintDescription(firstAttribute: .height, secondAttribute: .notAnAttribute, constant: constant, forceNilSecondView: true, owningView: .selfOwned)
+			if constant < 0.0 {
+				debugPrint("WARNING: Attempt to apply a negative height constant as a constraint. The value will be set to zero.")
+			}
+			
+			return ConstraintDescription(firstAttribute: .height, secondAttribute: .notAnAttribute, constant: max(0.0, constant), forceNilSecondView: true, owningView: .selfOwned)
 		
 		case let .width(constant):
 			return ConstraintDescription(firstAttribute: .width, secondAttribute: .width, constant: constant)
 		
 		case let .widthConstant(constant):
-			return ConstraintDescription(firstAttribute: .width, secondAttribute: .notAnAttribute, constant: constant, forceNilSecondView: true, owningView: .selfOwned)
+			if constant < 0.0 {
+				debugPrint("WARNING: Attempt to apply a negative width constant as a constraint. The value will be set to zero.")
+			}
+			
+			return ConstraintDescription(firstAttribute: .width, secondAttribute: .notAnAttribute, constant: max(0.0, constant), forceNilSecondView: true, owningView: .selfOwned)
 		
 		case let .centerX(constant):
 			return ConstraintDescription(firstAttribute: .centerX, secondAttribute: .centerX, constant: constant)
@@ -180,7 +195,7 @@ public enum Pin {
 			return ConstraintDescription(firstAttribute: .top, secondAttribute: .bottom, constant: constant)
 		
 		case let .above(constant):
-			return ConstraintDescription(firstAttribute: .bottom, secondAttribute: .top, constant: constant)
+			return ConstraintDescription(firstAttribute: .bottom, secondAttribute: .top, constant: -constant)
 		
 		case let .firstBaseline(constant):
 			return ConstraintDescription(firstAttribute: .firstBaseline, secondAttribute: .firstBaseline, constant: constant)
