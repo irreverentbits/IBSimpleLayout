@@ -17,7 +17,7 @@ class MarginTests: IBSimpleLayoutTests {
 		forceLayout()
 		
 		// Test - Note, standard view margins is 8.0 points
-		testUnchangedParentView()
+		checkUnchangedParentView()
 		XCTAssertEqual(subView1.frame, CGRect(x: 8.0, y: 8.0, width: 84.0, height: 84.0), "The subView has an incorrect frame.")
 		
 		checkFirstAttributes()
@@ -32,7 +32,7 @@ class MarginTests: IBSimpleLayoutTests {
 		forceLayout()
 		
 		// Test - Note, standard view margins is 8.0 points
-		testUnchangedParentView()
+		checkUnchangedParentView()
 		XCTAssertEqual(subView1.frame, CGRect(x: 18.0, y: 13.0, width: 89.0, height: 99.0), "The subView has an incorrect frame.")
 		
 		checkFirstAttributes()
@@ -47,7 +47,7 @@ class MarginTests: IBSimpleLayoutTests {
 		forceLayout()
 		
 		// Test - Note, standard view margins is 8.0 points
-		testUnchangedParentView()
+		checkUnchangedParentView()
 		XCTAssertEqual(subView1.frame, CGRect(x: -2.0, y: 3.0, width: 79.0, height: 69.0), "The subView has an incorrect frame.")
 		
 		checkFirstAttributes()
@@ -83,7 +83,7 @@ class MarginTests: IBSimpleLayoutTests {
 		forceLayout()
 		
 		// Test
-		testUnchangedParentView()
+		checkUnchangedParentView()
 		XCTAssertEqual(subView1.frame, CGRect(x: 44.0, y: 52.0, width: 20.0, height: 20.0), "The subView has an incorrect frame.")
 	}
 	
@@ -96,7 +96,7 @@ class MarginTests: IBSimpleLayoutTests {
 		forceLayout()
 		
 		// Test
-		testUnchangedParentView()
+		checkUnchangedParentView()
 		XCTAssertEqual(subView1.frame, CGRect(x: 28.0, y: 20.0, width: 20.0, height: 20.0), "The subView has an incorrect frame.")
 	}
 	
@@ -109,7 +109,7 @@ class MarginTests: IBSimpleLayoutTests {
 		forceLayout()
 		
 		// Test
-		testUnchangedParentView()
+		checkUnchangedParentView()
 		XCTAssertEqual(subView1.frame, CGRect(x: 36.0, y: 36.0, width: 20.0, height: 20.0), "The subView has an incorrect frame.")
 	}
 }

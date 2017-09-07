@@ -36,7 +36,7 @@ class IBSimpleLayoutTests: XCTestCase {
 		parentView.layoutIfNeeded()
 	}
 	
-	internal func testUnchangedParentView() {
+	internal func checkUnchangedParentView() {
 		XCTAssertEqual(parentView.frame, CGRect(x: 0.0, y: 0.0, width: 100.0, height: 100.0), "The parentView frame should not have changed.")
 	}
 }

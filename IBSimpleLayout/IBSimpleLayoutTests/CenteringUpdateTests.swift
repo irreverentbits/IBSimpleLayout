@@ -1,15 +1,15 @@
 //
-//  CenteringTests.swift
+//  CenteringUpdateTests.swift
 //  IBSimpleLayoutTests
 //
-//  Created by Lee Calloway on 7/29/17.
+//  Created by Lee Calloway on 8/23/17.
 //  Copyright © 2017 Irreverent Bits. All rights reserved.
 //
 
 import XCTest
 
-class CenteringTests: IBSimpleLayoutTests {
-	func testPerfectCenter() {
+class CenteringUpdateTests: IBSimpleLayoutTests {
+	func testPerfectToPositiveCenter() {
 		// Code to test
 		subView1.pushPins([.centerX(0.0), .centerY(0.0), .widthConstant(50.0), .heightConstant(50.0)])
 		
@@ -20,13 +20,11 @@ class CenteringTests: IBSimpleLayoutTests {
 		checkUnchangedParentView()
 		XCTAssertEqual(subView1.frame, CGRect(x: 25.0, y: 25.0, width: 50.0, height: 50.0), "The subView has an incorrect frame.")
 		
-		checkFirstAttributes()
-		checkSecondAttributes()
-	}
-	
-	func testPositiveOffsetCenter() {
+		checkCenteringFirstAttributes()
+		checkCenteringSecondAttributes()
+		
 		// Code to test
-		subView1.pushPins([.centerX(10.0), .centerY(20.0), .widthConstant(50.0), .heightConstant(50.0)])
+		subView1.updatePins([.centerX(10.0), .centerY(20.0), .widthConstant(50.0), .heightConstant(50.0)])
 		
 		// Make the layout take effect
 		forceLayout()
@@ -35,26 +33,11 @@ class CenteringTests: IBSimpleLayoutTests {
 		checkUnchangedParentView()
 		XCTAssertEqual(subView1.frame, CGRect(x: 35.0, y: 45.0, width: 50.0, height: 50.0 ), "The subView has an incorrect frame.")
 		
-		checkFirstAttributes()
-		checkSecondAttributes()
+		checkCenteringFirstAttributes()
+		checkCenteringSecondAttributes()
 	}
 	
-	func testNegativeOffsetCenter() {
-		// Code to test
-		subView1.pushPins([.centerX(-10.0), .centerY(-15.0), .widthConstant(50.0), .heightConstant(50.0)])
-		
-		// Make the layout take effect
-		forceLayout()
-		
-		// Test
-		checkUnchangedParentView()
-		XCTAssertEqual(subView1.frame, CGRect(x: 15.0, y: 10.0, width: 50.0, height: 50.0), "The subView has an incorrect frame.")
-		
-		checkFirstAttributes()
-		checkSecondAttributes()
-	}
-	
-	private func checkFirstAttributes() {
+	private func checkCenteringFirstAttributes() {
 		let parentFirstAttributes = parentView.constraints.map({ $0.firstAttribute })
 		let childFirstAttributes = subView1.constraints.map({ $0.firstAttribute })
 		
@@ -67,7 +50,7 @@ class CenteringTests: IBSimpleLayoutTests {
 		XCTAssertTrue(childFirstAttributes.contains(.height), "There should be a height constraint on the subView.")
 	}
 	
-	private func checkSecondAttributes() {
+	private func checkCenteringSecondAttributes() {
 		let parentSecondAttributes = parentView.constraints.map({ $0.secondAttribute })
 		let childSecondAttributes = subView1.constraints.map({ $0.secondAttribute })
 		

@@ -17,7 +17,7 @@ class DimensionTests: IBSimpleLayoutTests {
 		forceLayout()
 		
 		// Test
-		testUnchangedParentView()
+		checkUnchangedParentView()
 		XCTAssertEqual(subView1.frame, CGRect(x: 0.0, y: 0.0, width: 100.0, height: 100.0), "The subView has an incorrect frame.")
 		
 		let firstAttributes = parentView.constraints.map({ $0.firstAttribute })
@@ -37,7 +37,7 @@ class DimensionTests: IBSimpleLayoutTests {
 		forceLayout()
 		
 		// Test
-		testUnchangedParentView()
+		checkUnchangedParentView()
 		XCTAssertEqual(subView1.frame, CGRect(x: 0.0, y: 0.0, width: 50.0, height: 150.0), "The subView has an incorrect frame.")
 		
 		let firstAttributes = parentView.constraints.map({ $0.firstAttribute })
@@ -57,7 +57,7 @@ class DimensionTests: IBSimpleLayoutTests {
 		forceLayout()
 		
 		// Test
-		testUnchangedParentView()
+		checkUnchangedParentView()
 		XCTAssertEqual(subView1.frame, CGRect(x: 10.0, y: 10.0, width: 50.0, height: 75.0), "The subView has an incorrect frame.")
 		
 		let parentFirstAttributes = parentView.constraints.map({ $0.firstAttribute })
@@ -80,7 +80,7 @@ class DimensionTests: IBSimpleLayoutTests {
 		forceLayout()
 		
 		// Test
-		testUnchangedParentView()
+		checkUnchangedParentView()
 		XCTAssertEqual(subView1.frame, CGRect(x: 10.0, y: 10.0, width: 0.0, height: 0.0), "Negative dimension constants should be replaced with values of zero.")
 		
 		let parentFirstAttributes = parentView.constraints.map({ $0.firstAttribute })

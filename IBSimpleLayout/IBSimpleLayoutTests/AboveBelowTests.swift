@@ -20,7 +20,7 @@ class AboveBelowTests: IBSimpleLayoutTests {
 		forceLayout()
 		
 		// Test
-		testUnchangedParentView()
+		checkUnchangedParentView()
 		XCTAssertEqual(subView1.frame, CGRect(x: 0.0, y: 110.0, width: parentView.frame.width, height: kHeight), "The subView has an incorrect frame.")
 	}
 	
@@ -36,7 +36,7 @@ class AboveBelowTests: IBSimpleLayoutTests {
 		forceLayout()
 		
 		// Test
-		testUnchangedParentView()
+		checkUnchangedParentView()
 		XCTAssertEqual(subView1.frame, CGRect(x: 0.0, y: 0.0, width: parentView.frame.width, height: kHeight), "The first subView has an incorrect frame.")
 		XCTAssertEqual(subView2.frame, CGRect(x: 0.0, y: kHeight, width: parentView.frame.width, height: kHeight), "The second subView has an incorrect frame.")
 	}
@@ -52,7 +52,7 @@ class AboveBelowTests: IBSimpleLayoutTests {
 		forceLayout()
 		
 		// Test
-		testUnchangedParentView()
+		checkUnchangedParentView()
 		XCTAssertEqual(subView1.frame, CGRect(x: 0.0, y: 90.0, width: parentView.frame.width, height: kHeight), "The subView has an incorrect frame.")
 	}
 	
@@ -67,7 +67,7 @@ class AboveBelowTests: IBSimpleLayoutTests {
 		forceLayout()
 		
 		// Test
-		testUnchangedParentView()
+		checkUnchangedParentView()
 		XCTAssertEqual(subView1.frame, CGRect(x: 0.0, y: -30.0, width: parentView.frame.width, height: kHeight), "The subView has an incorrect frame.")
 	}
 	
@@ -83,7 +83,7 @@ class AboveBelowTests: IBSimpleLayoutTests {
 		forceLayout()
 		
 		// Test
-		testUnchangedParentView()
+		checkUnchangedParentView()
 		XCTAssertEqual(subView1.frame, CGRect(x: 0.0, y: parentView.frame.height - kHeight, width: parentView.frame.width, height: kHeight), "The first subView has an incorrect frame.")
 		XCTAssertEqual(subView2.frame, CGRect(x: 0.0, y: subView1.frame.minY - kHeight, width: parentView.frame.width, height: kHeight), "The second subView has an incorrect frame.")
 	}
@@ -99,7 +99,7 @@ class AboveBelowTests: IBSimpleLayoutTests {
 		forceLayout()
 		
 		// Test
-		testUnchangedParentView()
+		checkUnchangedParentView()
 		XCTAssertEqual(subView1.frame, CGRect(x: 0.0, y: -10.0, width: parentView.frame.width, height: kHeight), "The subView has an incorrect frame.")
 	}
 }

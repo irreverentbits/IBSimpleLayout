@@ -240,7 +240,7 @@ public extension UIView {
 			return
 		}
 		
-		guard let parentView: UIView = inclusiveCommonAncestor(firstView: self, secondView: secondView) else {
+		guard let parentView: UIView = self.inclusiveCommonAncestor(with: secondView) else {
 			debugPrint("FAILURE: `updatePins` was called for two views that do not have a common ancestor")
 			return
 		}
@@ -279,7 +279,7 @@ public extension UIView {
 			return []
 		}
 		
-		guard let parentView: UIView = inclusiveCommonAncestor(firstView: self, secondView: secondView) else {
+		guard let parentView: UIView = self.inclusiveCommonAncestor(with: secondView) else {
 			debugPrint("FAILURE: `pushPins` was called for two views that do not have a common ancestor")
 			return []
 		}
@@ -328,42 +328,47 @@ public extension UIView {
 	}
 }
 
-private extension UIView {
+public extension UIView {
 	/**
-	Find the common ancestor of two views in a view hierarchy. A view can be considered its own ancestor,
-	so one of the provided views will be returned if it is an ancestor of the other view.
-	- parameter firstView: The first of two possibly hierarchically related UIViews.
-	- parameter secondView: The second of two possibly hierarchically related UIViews.
-	- returns: The common ancestor of the `firstView` and the `secondView` or nil if there is no common ancestor.
+	Find the common ancestor between this view and another view in a view hierarchy. A view can be considered its own ancestor,
+	so `self` or `otherView` are valid returns if either is an ancestor of the other.
+	- parameter otherView: The other view that may be hierarchically related to this view.
+	- returns: The common ancestor of `self` and the `otherView` or nil if there is no common ancestor.
 	*/
-	func inclusiveCommonAncestor(firstView: UIView, secondView: UIView) -> UIView? {
+	func inclusiveCommonAncestor(with otherView: UIView) -> UIView? {
 		var foundAncestor: UIView? = nil
 		
 		// Check if one of the provided views is itself the common ancestor before moving up the hierarchy looking for a different ancestor
-		if firstView.isDescendant(of: secondView) {
-			foundAncestor = secondView
-		} else if secondView.isDescendant(of: firstView) {
-			foundAncestor = firstView
+		if self.isDescendant(of: otherView) {
+			foundAncestor = otherView
+		} else if otherView.isDescendant(of: self) {
+			foundAncestor = self
 		} else {
-			foundAncestor = exclusiveCommonAncestor(firstView: firstView, secondView: secondView)
+			foundAncestor = exclusiveCommonAncestor(with: otherView)
 		}
 		
 		return foundAncestor
 	}
 	
 	/**
-	Find the common ancestor of the two views in a view hierarchy. A view cannot be considered its own ancestor.
-	- parameter firstView: The first of two possibly hierarchically related UIViews.
-	- parameter secondView: The second of two possibly hierarchically related UIViews.
-	- returns: The common ancestor of both views or nil if there is no common ancestor.
+	Find the common ancestor of the two views in a view hierarchy. A view is not considered to be its own ancestor.
+	If `self` and `otherView` have a direct lineage, then the common ancestor is the ancestor that is one or more levels above both.
+	For example, the common ancestor for a parent and child is the parent's parent (aka the child's grandparent).
+	- parameter otherView: The other view that may be hierarchically related to this view.
+	- returns: The common ancestor of both `self` and `otherView` or nil if there is no common ancestor.
 	*/
-	func exclusiveCommonAncestor(firstView: UIView, secondView: UIView) -> UIView? {
+	func exclusiveCommonAncestor(with otherView: UIView) -> UIView? {
 		var foundAncestor: UIView? = nil
-		
-		var testAncestor: UIView? = firstView.superview
+		var testAncestor: UIView? = self.superview
 		
 		while testAncestor != nil {
-			if secondView.isDescendant(of: testAncestor!) {
+			// If otherView is ever the same as the testAncestor, that means it is a direct ancestor of self
+			// so the common ancestor would be
+			if otherView === testAncestor {
+				return otherView.superview ?? nil
+			}
+			
+			if otherView.isDescendant(of: testAncestor!) {
 				foundAncestor = testAncestor
 				break
 			}
