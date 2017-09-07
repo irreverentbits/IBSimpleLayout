@@ -363,7 +363,7 @@ public extension UIView {
 		
 		while testAncestor != nil {
 			// If otherView is ever the same as the testAncestor, that means it is a direct ancestor of self
-			// so the common ancestor would be
+			// so the common ancestor would be otherView's parent view.
 			if otherView === testAncestor {
 				return otherView.superview ?? nil
 			}
