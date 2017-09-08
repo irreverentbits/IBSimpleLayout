@@ -48,7 +48,7 @@ public enum Pin {
 	
 	public func priority(_ value: Float) -> Pin {
 		var description = constraintDescription()
-		description.priority = value
+		description.priority = UILayoutPriority(rawValue: value)
 		
 		return .custom(description)
 	}

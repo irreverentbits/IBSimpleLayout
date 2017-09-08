@@ -29,7 +29,7 @@ public struct ConstraintDescription {
 	var secondAttribute: NSLayoutAttribute = .notAnAttribute
 	var multiplier: CGFloat = 1.0
 	var constant: CGFloat = 0.0
-	var priority: UILayoutPriority = UILayoutPriorityRequired
+	var priority: UILayoutPriority = UILayoutPriority.required
 	var identifier: String?
 	private(set) var owningView: OwningViewType = .parentOwned
 	
