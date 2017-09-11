@@ -4,8 +4,9 @@
 
 IBSimpleLayout is an Auto Layout wrapper API that simplifies most boilerplate code for creating and updating constraints.
 
-It was created partially as an exercise in designing an API using Swift features, partially as an example of a command
-driven API, and partially out of a conviction that Auto Layout could be distilled into an even simpler API than those provided by most popular frameworks (in late 2016, early 2017), including Apple's.
+It was created partially as an exercise in designing an API using Swift features and partially out of a conviction that Auto Layout could be distilled into an even simpler API than those provided by most popular frameworks (in late 2016, early 2017), including Apple's.
+
+The result happens to be a good example of a command driven API.
 
 ## Requirements and Goals
 
@@ -22,10 +23,6 @@ In terms of the framework and API, the goals of IBSimpleLayout were to create a 
   
   If the framework allows 90% of Auto Layout code to be much simpler and the other 10% is not as simple as in other libraries, I'd consider that a win.
   
-- Constraint creation should be declarative. 
-
-  The framework will figure out which view to assign a constraint to, so no more calls to addConstraints.
-  
 ## Simple assumptions
   
 The key to simplifying most constraint creation is to assume default values for most of the parameters used to create those constraints.
@@ -36,7 +33,7 @@ All of the assumptions can be overridden if necessary.
 - The second view in a constraint is the first view's parent view.
 - The constraint multiplier is 1.0.
 - The constraint relation is "equal".
-- The constraint priority is "requried".
+- The constraint priority is "required" (float value of 1.0).
 - The attribute affected by the constraint for both the first and second view is the same.
   
 In my experience, the default values cover 90+% of the constraints I create in code. Just building these assumptions into a framework
@@ -53,7 +50,7 @@ view.pushPins([.leading(0.0), .trailing(0.0), .top(0.0), .bottom(0.0)])
 
 The code above assumes that all constraints are between `view` and its parent. It also assumes that each attribute is matched to the same attribute on the parent (e.g. the `view` leading is matched to the parent's `leading` edge).
 
-All pins must include the constant they should use.
+*Note, all pins must always include the constant they should use, even if it is zero.*
 
 Here is another simple example:
 
@@ -83,10 +80,19 @@ view.pushPins([.leading(0.0), .width(0.0), .height(0.0), Pin.top(16.0).toAttribu
 
 ## Custom constraint types
 
-As shown in the last example above, IBSimpleLayout defines two custom `Pin` types. The `above` and `below` `Pin` types can be used to place views above or below one another. These pins are really just short cuts for specifying pins that specify a `bottom` attribute matched to a `top` attribute. For example, the last code example above could have been written this way:
+IBSimpleLayout defines two custom `Pin` types. The `above` and `below` pin types can be used to place views above or below one another. These pins are really just short cuts for specifying pins that specify a `bottom` attribute matched to a `top` attribute. For example, the last code example above could have been written this way:
 
 ```
 view.pushPins([.leading(0.0), .width(0.0), .height(0.0), .below(16.0)], relativeTo: otherView)
+```
+
+The margin constraint types have slightly different behavior from most other pins. Their default values are based on what I have found to be typical usage. So, instead of associating a view's attribute with the same exact attribute on the parent view (by default), a view's *non margin* edge is associated with another view's *margin* edge. So the margin `Pin` enums all associate a non margin edge of the first view with a margin edge of the second view. For example:
+
+```
+// Set the view's leading and trailing edges equal to the parent view's leading and trailing margins.
+// Set the view's top edge to 12.0 points below the the parent's top margin.
+// Set the view's bottom edge to 12 points above the parent's bottom margin.
+view.pushPins([.leadingMargin(0.0), .trailingMargin(0.0), .topMargin(12.0), .bottomMargin(-12.0)])
 ```
 
 ## Updating constraints
@@ -103,7 +109,7 @@ Note, `updatePins` will not create a constraint if no matching constraint is fou
 
 ## Referencing constraints
 
-Given the `updatePins` function, it becomes less necessary to create properties to constraints since a constraint can be found and its constant updated without a property. But if a reference is still necessary, both `pushPins` and `pushPin` return the constraints they create. Naturally, if there are a lot of constraints being upated, it may be noticeably more performant to save them to properties. YMMV.
+Given the `updatePins` function, it becomes less necessary to create properties to constraints since a constraint can be found and its constant updated without a property. But if a reference is still necessary, both `pushPins` and `pushPin` return the constraints they create.
 
 ```
 // The array of push pins result in an array of constraints that are in 
@@ -126,7 +132,7 @@ let standardMarginPins = [.leading(16.0), .trailing(16.0), .top(16.0), .bottom(1
 view1.pushPins(zeroMarginPins)
 view2.pushPins(zeroMarginPins)
 
-// Later, after a user action, we can change the views to have margins within their parent view
+// Later, perhaps after a user action, we can change the views to have margins within their parent view
 view1.updatePins(standardMarginPins)
 view2.updatePins(standardMarginPins)
 ```
