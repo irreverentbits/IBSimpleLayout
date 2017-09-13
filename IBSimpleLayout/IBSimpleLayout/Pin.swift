@@ -20,30 +20,55 @@ A representation of an Auto Layout constraint.
 A pin can be applied as needed to a view using extension functions on `UIView`.
 */
 public enum Pin {
+	/// By default, describes a constraint that makes a view's leading edge equal to its parent's leading edge plus the provided constant.
 	case leading(CGFloat)
+	/// By default, describes a constraint that makes a view's trailing edge equal to its parent's trailing edge plus the provided constant.
 	case trailing(CGFloat)
+	/// By default, describes a constraint that makes a view's top edge equal to its parent's top edge plus the provided constant.
 	case top(CGFloat)
+	/// By default, describes a constraint that makes a view's bottom edge equal to its parent's bottom edge plus the provided constant.
 	case bottom(CGFloat)
+	/// By default, describes a constraint that makes a view's height equal to its parent's height plus the provided constant.
 	case height(CGFloat)
+	/// By default, describes a constraint that makes a view's height equal to the provided constant.
 	case heightConstant(CGFloat)
+	/// By default, describes a constraint that makes a view's width equal to its parent's width plus the provided constant.
 	case width(CGFloat)
+	/// By default, describes a constraint that makes a view's width equal to the provided constant.
 	case widthConstant(CGFloat)
+	/// By default, describes a constraint that makes a view's center X equal to its parent's center X plus the provided constant.
 	case centerX(CGFloat)
+	/// By default, describes a constraint that makes a view's center Y equal to its parent's center Y plus the provided constant.
 	case centerY(CGFloat)
+	/// By default, describes a constraint that makes a view's top edge equal to its parent's bottom edge plus the provided constant.
 	case below(CGFloat)
+	/// By default, describes a constraint that makes a view's bottom edge equal to its parent's top edge plus the provided constant.
 	case above(CGFloat)
+	/// By default, describes a constraint that makes a view's last baseline equal to its parent's last baseline plus the provided constant.
 	case lastBaseline(CGFloat)
+	/// By default, describes a constraint that makes a view's first baseline equal to its parent's first baseline plus the provided constant.
 	case firstBaseline(CGFloat)
+	/// By default, describes a constraint that makes a view's left edge equal to its parent's left margin plus the provided constant.
 	case leftMargin(CGFloat)
+	/// By default, describes a constraint that makes a view's right edge equal to its parent's right margin plus the provided constant.
 	case rightMargin(CGFloat)
+	/// By default, describes a constraint that makes a view's top edge equal to its parent's top margin plus the provided constant.
 	case topMargin(CGFloat)
+	/// By default, describes a constraint that makes a view's bottom edge equal to its parent's bottom margin plus the provided constant.
 	case bottomMargin(CGFloat)
-	// leadingMargin
-	// trailingMargin
+	/// By default, describes a constraint that makes a view's leading edge equal to its parent's leading margin plus the provided constant.
+	case leadingMargin(CGFloat)
+	/// By default, describes a constraint that makes a view's trailing edge equal to its parent's trailing margin plus the provided constant.
+	case trailingMargin(CGFloat)
+	/// By default, describes a constraint that makes a view's center X equal to its parent's center X within the parent's margins plus the provided constant.
 	case centerXWithinMargins(CGFloat)
+	/// By default, describes a constraint that makes a view's center Y equal to its parent's center Y within the parent's margins plus the provided constant.
 	case centerYWithinMargins(CGFloat)
-	// left
-	// right
+	/// By default, describes a constraint that makes a view's left edge equal to its parent's left edge plus the provided constant.
+	case left(CGFloat)
+	/// By default, describes a constraint that makes a view's right edge equal to its parent's right edge plus the provided constant.
+	case right(CGFloat)
+	/// A constraint description container that can be used when no other Pin type captures the constraint description with its default values.
 	case custom(ConstraintDescription)
 	
 	public func priority(_ value: Float) -> Pin {
@@ -144,10 +169,10 @@ public enum Pin {
 			return ConstraintDescription(firstAttribute: .lastBaseline, secondAttribute: .lastBaseline, constant: constant)
 		
 		case let .leftMargin(constant):
-			return ConstraintDescription(firstAttribute: .leading, secondAttribute: .leadingMargin, constant: constant)
+			return ConstraintDescription(firstAttribute: .left, secondAttribute: .leftMargin, constant: constant)
 			
 		case let .rightMargin(constant):
-			return ConstraintDescription(firstAttribute: .trailing, secondAttribute: .trailingMargin, constant: constant)
+			return ConstraintDescription(firstAttribute: .right, secondAttribute: .rightMargin, constant: constant)
 			
 		case let .topMargin(constant):
 			return ConstraintDescription(firstAttribute: .top, secondAttribute: .topMargin, constant: constant)
@@ -155,11 +180,23 @@ public enum Pin {
 		case let .bottomMargin(constant):
 			return ConstraintDescription(firstAttribute: .bottom, secondAttribute: .bottomMargin, constant: constant)
 			
+		case let .leadingMargin(constant):
+			return ConstraintDescription(firstAttribute: .leading, secondAttribute: .leadingMargin, constant: constant)
+			
+		case let .trailingMargin(constant):
+			return ConstraintDescription(firstAttribute: .trailing, secondAttribute: .trailingMargin, constant: constant)
+			
 		case let .centerXWithinMargins(constant):
 			return ConstraintDescription(firstAttribute: .centerX, secondAttribute: .centerXWithinMargins, constant: constant)
 			
 		case let .centerYWithinMargins(constant):
 			return ConstraintDescription(firstAttribute: .centerY, secondAttribute: .centerYWithinMargins, constant: constant)
+			
+		case let .left(constant):
+			return ConstraintDescription(firstAttribute: .left, secondAttribute: .left, constant: constant)
+			
+		case let .right(constant):
+			return ConstraintDescription(firstAttribute: .right, secondAttribute: .right, constant: constant)
 			
 		case let .custom(description):
 			return description

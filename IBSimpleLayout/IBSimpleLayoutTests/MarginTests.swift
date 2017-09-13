@@ -11,7 +11,7 @@ import XCTest
 class MarginTests: IBSimpleLayoutTests {
 	func testZeroMargins() {
 		// Code to test
-		subView1.pushPins([.leftMargin(0.0), .rightMargin(0.0), .topMargin(0.0), .bottomMargin(0.0)])
+		subView1.pushPins([.leadingMargin(0.0), .trailingMargin(0.0), .topMargin(0.0), .bottomMargin(0.0)])
 		
 		// Make the layout take effect
 		forceLayout()
@@ -26,7 +26,7 @@ class MarginTests: IBSimpleLayoutTests {
 	
 	func testPositiveMargins() {
 		// Code to test
-		subView1.pushPins([.leftMargin(10.0), .rightMargin(15.0), .topMargin(5.0), .bottomMargin(20.0)])
+		subView1.pushPins([.leadingMargin(10.0), .trailingMargin(15.0), .topMargin(5.0), .bottomMargin(20.0)])
 		
 		// Make the layout take effect
 		forceLayout()
@@ -41,7 +41,7 @@ class MarginTests: IBSimpleLayoutTests {
 	
 	func testNegativeMargins() {
 		// Code to test
-		subView1.pushPins([.leftMargin(-10.0), .rightMargin(-15.0), .topMargin(-5.0), .bottomMargin(-20.0)])
+		subView1.pushPins([.leadingMargin(-10.0), .trailingMargin(-15.0), .topMargin(-5.0), .bottomMargin(-20.0)])
 		
 		// Make the layout take effect
 		forceLayout()
