@@ -108,7 +108,9 @@ view.updatePins([.leading(16.0), .width(-16.0)], relativeTo: otherView)
 
 As long as the same view is specified for the constraints (either the default parent or another view using the `relativeTo` parameter), the constraints will be found and their constants updated.
 
-Note, `updatePins` will not create a constraint if no matching constraint is found.
+**Note, `updatePins` will not create a constraint if no matching constraint is found.**
+
+If an update needs to be made to a pin that deviates from the default values (i.e. that was modified with additional function calls on the Pin), it is best to store a property to the constraint created when pushing the pin and change its values via the property. It is possible to update the pin using the `updatePins` function, but it requires that the pin be fully defined again in order for it to be found amongst all other constraints. More information can be found in the Caveats section at the end of this README.
 
 ## Referencing constraints
 
@@ -140,4 +142,24 @@ view1.updatePins(standardMarginPins)
 view2.updatePins(standardMarginPins)
 ```
 
+## Caveats
+
+To update a constraint using the `updatePins` function when that constraint deviates from the default values for a pin, the pin provided to `updatePins` must use the same function modifiers for the unmodifiable properties of a constraint in the updatePins function as were used in the pushPin* function in order for the constraint to be found. Specifically, constraint equality is tested based on the properties that cannot be changed on a constraint once it is created. Those are:
+
+- first view
+- first attribute
+- second view
+- second attribute
+- relation
+- multiplier
+
+Here is an example of creating a non-default constraint and then updating it:
+
+```swift
+// Set the width to 20.0
+view.pushPin(Pin.width(20.0).relation(.greatherThanOrEqual).multiplier(1.2).toAttribute(.height))
+
+// Change the width to 0.0
+view.updatePins([Pin.width(0.0).relation(.greaterThanOrEqual).multiplier(1.2).toAttribute(.height)])
+```
 
