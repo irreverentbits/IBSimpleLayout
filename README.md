@@ -6,8 +6,6 @@ IBSimpleLayout is an Auto Layout wrapper API that simplifies most boilerplate co
 
 It was created partially as an exercise in designing an API using Swift features and partially out of a conviction that Auto Layout could be distilled into an even simpler API than those provided by most popular frameworks (in late 2016, early 2017), including Apple's.
 
-The result happens to be a good example of a command driven API.
-
 ## Requirements and Goals
 
 In terms of the framework and API, the goals of IBSimpleLayout were to create a framework that:
@@ -36,8 +34,7 @@ All of the assumptions can be overridden if necessary.
 - The constraint priority is "required" (float value of 1.0).
 - The attribute affected by the constraint for both the first and second view is the same.
   
-In my experience, the default values cover 90+% of the constraints I create in code. Just building these assumptions into a framework
-simplifies code greatly.
+In my experience, the default values cover 90+% of the constraints I create in code. Just building these assumptions into a framework simplifies code greatly.
 
 ## Simple samples
 
@@ -50,7 +47,7 @@ view.pushPins([.leading(0.0), .trailing(0.0), .top(0.0), .bottom(0.0)])
 
 The code above assumes that all constraints are between `view` and its parent. It also assumes that each attribute is matched to the same attribute on the parent (e.g. the `view` leading is matched to the parent's `leading` edge).
 
-*Note, all pins must always include the constant they should use, even if it is zero.*
+**Note, all pins must always include the constant they should use, even if it is zero.**
 
 Here is another simple example:
 
@@ -62,13 +59,19 @@ view.pushPins([.centerX(0.0), .centerY(0.0), .width(-16.0), .heightConstant(50.0
 
 ## Deviating from the defaults
 
-Any deviations from the default values the framework assumes can be made by calling a function on the `Pin` enum. It is much like having a parameter name and value in a function, but with the syntax of calling a different function for each parameter. Here is a contrived example:
+Any deviations from the default values the framework assumes can be made by calling a function on the `Pin` enum. It is much like having a parameter name and value in a function, but with the syntax of calling a different function for each parameter.
+
+**Note, when functions are applied to a Pin, the `Pin` type identifier must be called out explicitly.** In order for the compiler to understand the function call, it must know the type the function is being called on. But once the function call is added, it cannot infer that the type calling the function is the same as the type expected by the pushPin function.
+
+🐔 🥚
+
+Here is a contrived example of applying functions to a Pin and showing the explicit callout to the Pin enum:
 
 ```swift
 // The order of the function calls doesn't matter
 // Add a constraint that makes view's width greater than or equal to 20.0 pts wider than 
 // 1.2 times its parent's height with a priority of 0.5.
-view.pushPin(.width(20.0).multiplier(1.2).relation(.greatherThanOrEqual).toAttribute(.height).priority(0.5))
+view.pushPin(Pin.width(20.0).relation(.greatherThanOrEqual).multiplier(1.2).toAttribute(.height).priority(0.5))
 ```
 
 Changing the view the constraints should be relative to (instead of the parent) can be done by adding a `relativeTo` parameter on the main `pushPin*` functions.
@@ -126,7 +129,7 @@ Since constraints are described via the `Pin` enum and aren't applied until they
 
 ```swift
 let zeroMarginPins = [.leading(0.0), .trailing(0.0), .top(0.0), .bottom(0.0)]
-let standardMarginPins = [.leading(16.0), .trailing(16.0), .top(16.0), .bottom(16.0)]
+let standardMarginPins = [.leading(16.0), .trailing(-16.0), .top(16.0), .bottom(-16.0)]
 
 // Initially, we can setup views to fill their parent views
 view1.pushPins(zeroMarginPins)
