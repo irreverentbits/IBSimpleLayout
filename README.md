@@ -8,18 +8,18 @@ It was created partially as an exercise in designing an API using Swift features
 
 ## Requirements and Goals
 
-In terms of the framework and API, the goals of IBSimpleLayout were to create a framework that:
+In terms of the framework and API, the goals of IBSimpleLayout are to create a framework that:
 - Leverages Swift
 
-  As a result, it only supports Swift. Objective C compatibility was not a priority because I don't write any *new* code in Objective C.
+  As a result, it only supports Swift. Objective C compatibility is not a priority because *new* code rarely needs to be written in Objective C.
     
 - Supports iOS, not OS X.
   
-  This allows for the simplest code and allows the API to use iOS constraint related types directly rather than introducing a middle layer of framework defined constants that stand in for iOS or OS X values depending on the build.
+  This allows for simpler code and allows the API to use iOS constraint related types directly rather than introducing a middle layer of framework defined constants that stand in for iOS or OS X values depending on the build.
   
 - Focuses on common auto layout code.
   
-  If the framework allows 90% of Auto Layout code to be much simpler and the other 10% is not as simple as in other libraries, I'd consider that a win.
+  If the framework allows 90% of Auto Layout code to be much simpler and the other 10% is not as simple as in other libraries, that would overall be a win for IBSimpleLayout.
   
 ## Simple assumptions
   
@@ -34,7 +34,7 @@ All of the assumptions can be overridden if necessary.
 - The constraint priority is "required" (float value of 1.0).
 - The attribute affected by the constraint for both the first and second view is the same.
   
-In my experience, the default values cover 90+% of the constraints I create in code. Just building these assumptions into a framework simplifies code greatly.
+The default values should apply to most constraints created in code. Just building these assumptions into a framework simplifies code greatly.
 
 ## Simple samples
 
@@ -45,7 +45,7 @@ IBSimpleLayout allows a constraint to be described using a `Pin` enum. A Pin can
 view.pushPins([.leading(0.0), .trailing(0.0), .top(0.0), .bottom(0.0)])
 ```
 
-The code above assumes that all constraints are between `view` and its parent. It also assumes that each attribute is matched to the same attribute on the parent (e.g. the `view` leading is matched to the parent's `leading` edge).
+The code above assumes that all constraints are between `view` and its parent view. It also assumes that each attribute is matched to the same attribute on the parent (e.g. the `view` `leading` is matched to the parent's `leading` edge).
 
 **Note, all pins must always include the constant they should use, even if it is zero.**
 
@@ -83,7 +83,7 @@ view.pushPins([.leading(0.0), .width(0.0), .height(0.0), Pin.top(16.0).toAttribu
 
 ## Custom constraint types
 
-IBSimpleLayout defines four custom `Pin` types. 
+IBSimpleLayout defines four custom `Pin` types: `above`, `below`, `leftOf`, and `rightOf`.
 
 The `above` and `below` pin types can be used to place views above or below one another. These pins are really just short cuts for specifying pins that specify a `bottom` attribute matched to a `top` attribute. For example, the last code example above could have been written this way:
 
