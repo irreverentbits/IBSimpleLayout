@@ -83,11 +83,15 @@ view.pushPins([.leading(0.0), .width(0.0), .height(0.0), Pin.top(16.0).toAttribu
 
 ## Custom constraint types
 
-IBSimpleLayout defines two custom `Pin` types. The `above` and `below` pin types can be used to place views above or below one another. These pins are really just short cuts for specifying pins that specify a `bottom` attribute matched to a `top` attribute. For example, the last code example above could have been written this way:
+IBSimpleLayout defines four custom `Pin` types. 
+
+The `above` and `below` pin types can be used to place views above or below one another. These pins are really just short cuts for specifying pins that specify a `bottom` attribute matched to a `top` attribute. For example, the last code example above could have been written this way:
 
 ```swift
 view.pushPins([.leading(0.0), .width(0.0), .height(0.0), .below(16.0)], relativeTo: otherView)
 ```
+
+The `leftOf` and `rightOf` pin types can be used to place a view to the left of or to the right of another view. These pins are short cuts for specifying that one view's trailing attribute is matched to a second view's leading attribute (leftOf) or vice versa (rightOf).
 
 The margin constraint types have slightly different behavior from most other pins. Their default values are based on what I have found to be typical usage. So, instead of associating a view's attribute with the same exact attribute on the parent view (by default), a view's *non margin* edge is associated with another view's *margin* edge. So the margin `Pin` enums all associate a non margin edge of the first view with a margin edge of the second view. For example:
 
