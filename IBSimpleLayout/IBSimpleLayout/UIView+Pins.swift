@@ -44,6 +44,8 @@ public extension UIView {
 			owningView.constraints.forEach({ (constraint) in
 				if constraint == description {
 					constraint.constant = description.constant
+					constraint.isActive = description.isActive
+					
 					foundConstraint = true
 				}
 			})
@@ -77,9 +79,7 @@ public extension UIView {
 		
 		pins.forEach { (pin) in
 			var description = pin.constraintDescription()
-			
 			description.firstView = self
-			
 			description.secondView = (description.forceNilSecondView ? nil : secondView)
 			
 			let constraint = NSLayoutConstraint(item: description.firstView as Any,
@@ -91,9 +91,9 @@ public extension UIView {
 			                                    constant: description.constant)
 			
 			constraint.priority = description.priority
-			
 			constraint.identifier = description.identifier
-			
+			constraint.isActive = description.isActive
+
 			let owningView = (description.owningView == .parentOwned ? parentView : self)
 			owningView.addConstraint(constraint)
 			

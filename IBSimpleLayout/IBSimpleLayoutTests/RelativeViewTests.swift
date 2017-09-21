@@ -15,15 +15,5 @@
 import XCTest
 
 class RelativeViewTests: IBSimpleLayoutTests {
-	func testRelativeSiblingView() {
-		
-	}
-	
-	func testRelativeParentView() {
-		
-	}
-	
-	func testRelativeAncestorView() {
-		
-	}
+
 }

@@ -37,8 +37,9 @@ public struct ConstraintDescription {
 	var constant: CGFloat = 0.0
 	var priority: UILayoutPriority = UILayoutPriority.required
 	var identifier: String?
+	var isActive: Bool = true
 	private(set) var owningView: OwningViewType = .parentOwned
-	
+
 	/**
 	Some constraints are never in relation to a second view (e.g. a width constant).
 	When true, `forceNilSecondView` allows a second view specified for a set of constraints to be ignored for a specific constraint.
@@ -64,11 +65,11 @@ public struct ConstraintDescription {
 			constraint.secondItem === description.secondView &&
 			constraint.firstAttribute == description.firstAttribute &&
 			constraint.secondAttribute == description.secondAttribute &&
-			constraint.relation == description.relation &&
-			constraint.multiplier == description.multiplier
+			constraint.relation == description.relation
 	}
 	
 	static func == (description: ConstraintDescription, constraint: NSLayoutConstraint) -> Bool {
 		return constraint == description
 	}
 }
+
