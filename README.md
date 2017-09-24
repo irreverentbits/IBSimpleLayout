@@ -41,13 +41,13 @@ The default values should apply to most constraints created in code. Just buildi
 IBSimpleLayout allows a constraint to be described using a `Pin` enum. A Pin can be "pushed" onto a UIView using either the `pushPin` or `pushPins` functions. When a `Pin` is pushed onto a UIView, it is converted to a constraint. Here is a simple example, with further explanation after the code block.
 
 ```swift
-// Make a child view match the size and placement of its parent
+// Make a child view's edges match the edge's of its parent
 view.pushPins([.leading(0.0), .trailing(0.0), .top(0.0), .bottom(0.0)])
 ```
 
 The code above assumes that all constraints are between `view` and its parent view. It also assumes that each attribute is matched to the same attribute on the parent (e.g. the `view` `leading` is matched to the parent's `leading` edge).
 
-**Note, all pins must always include the constant they should use, even if it is zero.**
+**Note, pins must always include the constant they should use, even if it is zero.**
 
 Here is another simple example:
 
@@ -78,7 +78,8 @@ Changing the view the constraints should be relative to (instead of the parent) 
 
 ```swift
 // Position view relative to otherView instead of relative to its parent view
-view.pushPins([.leading(0.0), .width(0.0), .height(0.0), Pin.top(16.0).toAttribute(.bottom)], relativeTo: otherView)
+view.pushPins([.leading(0.0), .width(0.0), .height(0.0)], relativeTo: otherView)
+view.pushPin(Pin.top(16.0).toAttribute(.bottom), relativeTo: otherView)
 ```
 
 ## Custom constraint types
@@ -104,7 +105,7 @@ view.pushPins([.leadingMargin(0.0), .trailingMargin(0.0), .topMargin(12.0), .bot
 
 ## Updating constraints
 
-Apple's constraint system limits updates to constraints such that once created, only a constraint's constant can be updated. IBSimpleLayout can update the constants on existing constraints via the `updatePins` function. For example, the constraints created by the last code example above could be updated to indent view under otherView.
+Apple's constraint system limits updates to constraints such that once created, only a constraint's constant can be updated. IBSimpleLayout can update the constants on existing constraints via the `updatePins` function. For example, the constraints created by the last code example above could be updated to indent `view` under `otherView`d.
 
 ```swift
 view.updatePins([.leading(16.0), .width(-16.0)], relativeTo: otherView)
@@ -132,7 +133,7 @@ view.pushPin(Pin.width(20.0).relation(.greatherThanOrEqual).toAttribute(.height)
 view.updatePins([Pin.width(0.0).relation(.greaterThanOrEqual).toAttribute(.height)], relativeTo: otherView)
 ```
 
-In this case, it's probably better to just declare a constraint property, store the constraint created when the pin is pushed, and update it the old fashioned way:
+In this case, it's probably better to just declare a constraint property, store the constraint (more info in the next section) created when the pin is pushed, and update it the old fashioned way:
 
 ```swift
 // Declare the property...
@@ -152,15 +153,15 @@ Given the `updatePins` function, it becomes less necessary to create properties 
 ```swift
 // The array of push pins result in an array of constraints that are in 
 // the same order as the pins used to create them.
-let sizeConstraints = view.pushPins([.width(0.0), .height(10.0)])
+let sizeConstraints: [NSLayoutConstraint] = view.pushPins([.width(0.0), .height(10.0)])
 
 // A single constraint is returned for the constraint of the top of view to the top of its parent view.
-let topConstraint = view.pushPin(.top(16.0))
+let topConstraint: NSLayoutConstraint = view.pushPin(.top(16.0))
 ```
 
 ## Predefining constraint sets
 
-Since constraints are described via the `Pin` enum and aren't applied until they are passed into a `pushPin*` or `updatePins` function on UIView, a set of pins can be created once and applied to many different views. For example, it's common to constrain all edges of a view to the edges of its parent. A set of edge Pins could be defined and reused repeatedly as shown below.
+Since constraints are described via the `Pin` enum and aren't applied until they are passed into a `pushPin*` or `updatePins` function on UIView, a set of pins can be created once and applied to many different views. For example, it's common to constrain all edges of a view to the edges of its parent. A set of edge Pins can be defined and reused repeatedly as shown below.
 
 ```swift
 let zeroMarginPins = [.leading(0.0), .trailing(0.0), .top(0.0), .bottom(0.0)]
