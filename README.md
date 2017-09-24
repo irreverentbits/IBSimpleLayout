@@ -105,7 +105,7 @@ view.pushPins([.leadingMargin(0.0), .trailingMargin(0.0), .topMargin(12.0), .bot
 
 ## Updating constraints
 
-Apple's constraint system limits updates to constraints such that once created, only a constraint's constant can be updated. IBSimpleLayout can update the constants on existing constraints via the `updatePins` function. For example, the constraints created by the last code example above could be updated to indent `view` under `otherView`d.
+Apple's constraint system limits updates to constraints such that once created, only a constraint's constant can be updated. IBSimpleLayout can update the constants on existing constraints via the `updatePins` function. For example, the constraints created by the last code example above could be updated to indent `view` under `otherView`.
 
 ```swift
 view.updatePins([.leading(16.0), .width(-16.0)], relativeTo: otherView)
