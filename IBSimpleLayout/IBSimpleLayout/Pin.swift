@@ -14,6 +14,8 @@
 
 
 import Foundation
+import CoreGraphics
+import UIKit
 
 /**
 A representation of an Auto Layout constraint.
