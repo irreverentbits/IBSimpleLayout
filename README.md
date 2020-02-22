@@ -1,7 +1,5 @@
 # IBSimpleLayout
 
-[![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
-
 IBSimpleLayout is an Auto Layout wrapper API that simplifies most boilerplate code for creating and updating constraints.
 
 It was created partially as an exercise in designing an API using Swift features and partially out of a conviction that Auto Layout could be distilled into an even simpler API than those provided by most popular frameworks (in late 2016, early 2017), including Apple's.
